@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `ActorSystem` struct in crate `kay`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, ActorSystem">
+
+    <title>kay::ActorSystem - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc struct">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'>Struct ActorSystem</p><div class="block items"><ul><li><a href="#methods">Methods</a></li></ul></div><p class='location'><a href='index.html'>kay</a></p><script>window.sidebarCurrent = {name: 'ActorSystem', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Struct <a href='index.html'>kay</a>::<wbr><a class="struct" href=''>ActorSystem</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a class='srclink' href='../src/kay/actor_system.rs.html#53-63' title='goto source code'>[src]</a></span></h1>
+<pre class='rust struct'>pub struct ActorSystem { /* fields omitted */ }</pre><div class='docblock'><p>The main thing inside of which all the magic happens.</p>
+
+<p>An <code>ActorSystem</code> contains the states of all registered actor instances,
+message inboxes (queues) for each registered Actor type,
+and message dispatchers for each registered (<code>Actor</code>, <code>Message</code>) pair.</p>
+
+<p>It can be controlled from the outside to do message passing and handling in turns.</p>
+</div>
+                    <h2 id='methods' class='small-section-header'>
+                      Methods<a href='#methods' class='anchor'></a>
+                    </h2>
+                <h3 id='impl' class='impl'><span class='in-band'><code>impl <a class="struct" href="../kay/struct.ActorSystem.html" title="struct kay::ActorSystem">ActorSystem</a></code><a href='#impl' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/kay/actor_system.rs.html#75-334' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.new' class="method"><span id='new.v' class='invisible'><code>pub fn <a href='#method.new' class='fnname'>new</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;panic_callback: <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/boxed/struct.Box.html" title="struct alloc::boxed::Box">Box</a>&lt;<a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/function/trait.Fn.html" title="trait core::ops::function::Fn">Fn</a>(<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/boxed/struct.Box.html" title="struct alloc::boxed::Box">Box</a>&lt;<a class="trait" href="https://doc.rust-lang.org/nightly/core/any/trait.Any.html" title="trait core::any::Any">Any</a>&gt;, &amp;mut <a class="struct" href="../kay/struct.World.html" title="struct kay::World">World</a>)&gt;, <br>&nbsp;&nbsp;&nbsp;&nbsp;networking: <a class="struct" href="../kay/struct.Networking.html" title="struct kay::Networking">Networking</a><br>) -&gt; <a class="struct" href="../kay/struct.ActorSystem.html" title="struct kay::ActorSystem">ActorSystem</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/kay/actor_system.rs.html#84-103' title='goto source code'>[src]</a></span></h4>
+<div class='docblock'><p>Create a new ActorSystem (usually only one per application is needed).
+Expects to get a panic callback as a parameter that is called when
+an actor panics during message handling and can thus be used to
+for example display the panic error message.</p>
+
+<p>Note that after an actor panicking, the whole <code>ActorSystem</code> switches
+to a panicked state and only passes messages anymore which have been
+marked as <em>critically receiveable</em> using <code>add_handler</code>.</p>
+</div><h4 id='method.register' class="method"><span id='register.v' class='invisible'><code>pub fn <a href='#method.register' class='fnname'>register</a>&lt;A:&nbsp;<a class="trait" href="../kay/trait.Actor.html" title="trait kay::Actor">Actor</a>&gt;(&amp;mut self)</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/kay/actor_system.rs.html#106-122' title='goto source code'>[src]</a></span></h4>
+<div class='docblock'><p>Register a new Actor type with the system</p>
+</div><h4 id='method.add_handler' class="method"><span id='add_handler.v' class='invisible'><code>pub fn <a href='#method.add_handler' class='fnname'>add_handler</a>&lt;A:&nbsp;<a class="trait" href="../kay/trait.Actor.html" title="trait kay::Actor">Actor</a>, M:&nbsp;<a class="trait" href="../kay/trait.Message.html" title="trait kay::Message">Message</a>, F:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/function/trait.Fn.html" title="trait core::ops::function::Fn">Fn</a>(<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;</a>M, <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;mut </a>A, &amp;mut <a class="struct" href="../kay/struct.World.html" title="struct kay::World">World</a>) -&gt; <a class="enum" href="../kay/enum.Fate.html" title="enum kay::Fate">Fate</a> + 'static&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;mut self, <br>&nbsp;&nbsp;&nbsp;&nbsp;handler: F, <br>&nbsp;&nbsp;&nbsp;&nbsp;critical: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a><br>)</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/kay/actor_system.rs.html#125-151' title='goto source code'>[src]</a></span></h4>
+<div class='docblock'><p>Register a handler for an Actor type and Message type.</p>
+</div><h4 id='method.add_spawner' class="method"><span id='add_spawner.v' class='invisible'><code>pub fn <a href='#method.add_spawner' class='fnname'>add_spawner</a>&lt;A:&nbsp;<a class="trait" href="../kay/trait.Actor.html" title="trait kay::Actor">Actor</a>, M:&nbsp;<a class="trait" href="../kay/trait.Message.html" title="trait kay::Message">Message</a>, F:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/function/trait.Fn.html" title="trait core::ops::function::Fn">Fn</a>(<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;</a>M, &amp;mut <a class="struct" href="../kay/struct.World.html" title="struct kay::World">World</a>) -&gt; A + 'static&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;mut self, <br>&nbsp;&nbsp;&nbsp;&nbsp;constructor: F, <br>&nbsp;&nbsp;&nbsp;&nbsp;critical: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a><br>)</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/kay/actor_system.rs.html#154-183' title='goto source code'>[src]</a></span></h4>
+<div class='docblock'><p>Register a handler that constructs an instance of an Actor type, given an ID</p>
+</div><h4 id='method.send' class="method"><span id='send.v' class='invisible'><code>pub fn <a href='#method.send' class='fnname'>send</a>&lt;M:&nbsp;<a class="trait" href="../kay/trait.Message.html" title="trait kay::Message">Message</a>&gt;(&amp;mut self, recipient: <a class="struct" href="../kay/struct.ID.html" title="struct kay::ID">ID</a>, message: M)</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/kay/actor_system.rs.html#189-218' title='goto source code'>[src]</a></span></h4>
+<div class='docblock'><p>Send a message to the actor(s) with a given <code>ID</code>.
+This is only used to send messages into the system from outside.
+Inside actor message handlers you always have access to a
+<a href="struct.World.html"><code>World</code></a> that allows you to send messages.</p>
+</div><h4 id='method.id' class="method"><span id='id.v' class='invisible'><code>pub fn <a href='#method.id' class='fnname'>id</a>&lt;A:&nbsp;<a class="trait" href="../kay/trait.Actor.html" title="trait kay::Actor">Actor</a>&gt;(&amp;mut self) -&gt; <a class="struct" href="../kay/struct.ID.html" title="struct kay::ID">ID</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/kay/actor_system.rs.html#221-223' title='goto source code'>[src]</a></span></h4>
+<div class='docblock'><p>Get the base ID of an Actor type</p>
+</div><h4 id='method.process_all_messages' class="method"><span id='process_all_messages.v' class='invisible'><code>pub fn <a href='#method.process_all_messages' class='fnname'>process_all_messages</a>(&amp;mut self)</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/kay/actor_system.rs.html#267-279' title='goto source code'>[src]</a></span></h4>
+<div class='docblock'><p>Processes all sent messages, and messages which are in turn sent
+during the handling of messages, up to a recursion depth of 1000.</p>
+
+<p>This is typically called in the main loop of an application.</p>
+
+<p>By sending different &quot;top-level commands&quot; into the system and calling
+<code>process_all_messages</code> inbetween, different aspects of an application
+(for example, UI, simulation, rendering) can be run isolated from each other,
+in a fixed order of &quot;turns&quot; during each main-loop iteration.</p>
+</div><h4 id='method.world' class="method"><span id='world.v' class='invisible'><code>pub fn <a href='#method.world' class='fnname'>world</a>(&amp;mut self) -&gt; <a class="struct" href="../kay/struct.World.html" title="struct kay::World">World</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/kay/actor_system.rs.html#282-284' title='goto source code'>[src]</a></span></h4>
+<div class='docblock'><p>Get a world context directly from the system, typically to send messages from outside</p>
+</div><h4 id='method.networking_connect' class="method"><span id='networking_connect.v' class='invisible'><code>pub fn <a href='#method.networking_connect' class='fnname'>networking_connect</a>(&amp;mut self)</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/kay/actor_system.rs.html#287-289' title='goto source code'>[src]</a></span></h4>
+<div class='docblock'><p>Connect to all peers in the network</p>
+</div><h4 id='method.networking_send_and_receive' class="method"><span id='networking_send_and_receive.v' class='invisible'><code>pub fn <a href='#method.networking_send_and_receive' class='fnname'>networking_send_and_receive</a>(&amp;mut self)</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/kay/actor_system.rs.html#293-295' title='goto source code'>[src]</a></span></h4>
+<div class='docblock'><p>Send queued outbound messages and take incoming queued messages
+and forward them to their local target recipient(s)</p>
+</div><h4 id='method.networking_finish_turn' class="method"><span id='networking_finish_turn.v' class='invisible'><code>pub fn <a href='#method.networking_finish_turn' class='fnname'>networking_finish_turn</a>(&amp;mut self)</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/kay/actor_system.rs.html#299-301' title='goto source code'>[src]</a></span></h4>
+<div class='docblock'><p>Finish the current networking turn and wait for peers which lag behind
+based on their turn number. This is the main backpressure mechanism.</p>
+</div><h4 id='method.networking_machine_id' class="method"><span id='networking_machine_id.v' class='invisible'><code>pub fn <a href='#method.networking_machine_id' class='fnname'>networking_machine_id</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/kay/actor_system.rs.html#304-306' title='goto source code'>[src]</a></span></h4>
+<div class='docblock'><p>The machine index of this machine within the network of peers</p>
+</div><h4 id='method.networking_n_turns' class="method"><span id='networking_n_turns.v' class='invisible'><code>pub fn <a href='#method.networking_n_turns' class='fnname'>networking_n_turns</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/kay/actor_system.rs.html#310-312' title='goto source code'>[src]</a></span></h4>
+<div class='docblock'><p>The current network turn this machine is in. Used to keep track
+if this machine lags behind or runs fast compared to its peers</p>
+</div><h4 id='method.networking_debug_all_n_turns' class="method"><span id='networking_debug_all_n_turns.v' class='invisible'><code>pub fn <a href='#method.networking_debug_all_n_turns' class='fnname'>networking_debug_all_n_turns</a>(&amp;self) -&gt; <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/kay/actor_system.rs.html#316-318' title='goto source code'>[src]</a></span></h4>
+<div class='docblock'><p>Return a debug message containing the current local view of
+network turn progress of all peers in the network</p>
+</div><h4 id='method.get_instance_counts' class="method"><span id='get_instance_counts.v' class='invisible'><code>pub fn <a href='#method.get_instance_counts' class='fnname'>get_instance_counts</a>(&amp;self) -&gt; <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/kay/actor_system.rs.html#321-333' title='goto source code'>[src]</a></span></h4>
+<div class='docblock'><p>Access to debugging statistics</p>
+</div></div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../";
+        window.currentCrate = "kay";
+    </script>
+    <script src="../main.js"></script>
+    <script defer src="../search-index.js"></script>
+</body>
+</html>
